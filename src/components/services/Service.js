@@ -8,7 +8,7 @@ async function getUser(params) {
         const responseJson = response
         return responseJson.data;
     } catch (err) {
-        console.log(`Ocorreu um erro: ${err}`);
+        return `Ocorreu um erro: ${err}`;
     }
 }
 
@@ -19,7 +19,7 @@ async function createUsers(params) {
         const responseJson = response
         return responseJson.data;
     } catch (err) {
-        console.log(`Ocorreu um erro: ${err}`);
+        return `Ocorreu um erro: ${err}`;
     }
 }
 export { createUsers };

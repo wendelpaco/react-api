@@ -17,22 +17,26 @@ export default class LoginComponent extends React.Component {
         const { _email, _senha } = this.state
         e.preventDefault()
         const data = JSON.stringify({ 'email': this.state._email, 'password': this.state._senha })
-        if (_email !== '' && _senha !== '') {
-            getUser(data).then((res) => {
-                if (!res.error) {
-                    localStorage.setItem("token", res.return.token);
-                    localStorage.setItem("usuario", this.state._email);
-                    if (localStorage.getItem("token")) {
-                        this.props.history.push('/home')
+        try {
+            if (_email !== '' && _senha !== '') {
+                getUser(data).then((res) => {
+                    if (!res.error) {
+                        localStorage.setItem("token", res.return.token);
+                        localStorage.setItem("usuario", this.state._email);
+                        if (localStorage.getItem("token")) {
+                            this.props.history.push('/home')
+                        } else {
+                            this.props.history.push('/')
+                        }
                     } else {
-                        this.props.history.push('/')
+                        this.setState({
+                            messeger: res.error.messeger
+                        })
                     }
-                } else {
-                    this.setState({
-                        messeger: res.error.messeger
-                    })
-                }
-            })
+                })
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
     onChange = (e) => {
